@@ -5,19 +5,22 @@ import { Button, Typography } from '@mui/material';
 import DrawIcon from '@mui/icons-material/Draw';
 import TextField from '@mui/material/TextField';
 import p1 from '../../assets/User/landingP1.png';
+import p2 from '../../assets/User/landingP2.png';
+import p3 from '../../assets/User/landingP3.png';
+import p4 from '../../assets/User/landingP4.png';
 import LoginUser from './LoginUser';
 import RegisterUser from './RegisterUser';
 
 const Landing = () => {
-    const navigateTo = useNavigate();
+
 
     const [isloginModalOpen, setLoginModalOpen] = useState(false);
-    const [isRegisterModalOpen, setRegisterModalOpen] = useState(true);
+    const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
 
     const handleRegisterButtonClick = () => {
         setRegisterModalOpen(true);
     }
-        const closeRegisterModal =()=>{
+    const closeRegisterModal = () => {
         setRegisterModalOpen(false);
     }
 
@@ -46,13 +49,13 @@ const Landing = () => {
                     <Button variant='outlined' sx={{ color: "#004225", fontSize: "1.2vmax", fontWeight: 400, marginRight: "2vmax" }}
                         onClick={handleRegisterButtonClick}
                     >Register</Button>
-                     
-                    <RegisterUser RegIsOpen={isRegisterModalOpen} RegOnCLose={closeRegisterModal}/> 
+
+                    <RegisterUser RegIsOpen={isRegisterModalOpen} RegOnCLose={closeRegisterModal} />
                 </div>
             </div>
 
 
-
+            {/* frontpage */}
             <div style={{ display: "flex", justifyContent: "space-between", }}>
                 {/* contentRight */}:
                 <div style={{ padding: "2vmax", marginTop: "4vmax" }}>
@@ -72,19 +75,60 @@ const Landing = () => {
                 <div style={{}}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
 
+                        {/* quadrant */}
                         <div style={{
                             width: "50vmax", height: "50vmax", borderEndStartRadius: "50vmax", marginLeft: "5.5vmax", marginTop: "-6vmax",
-                            backgroundColor: "rgba(210, 222, 50, 0.3)", marginLeft: "-3vmax"
+                            backgroundColor: "#f1f5c1", marginLeft: "-3vmax"
                         }}>
 
-                            <img src={p1} style={{ marginTop: "10vmax", marginLeft: "16vmax", width: "18vmax", height: "18vmax", borderRadius: "50vmax" }} />
-                        </div>
-                        <div style={{
-                            width: "16vmax", height: "16vmax", borderRadius: "52vmax", background: "repeating-linear-gradient(45deg, rgba(162,197,121,0.5), rgba(162,197,121,0.3) 10px, white 10px, white 20px)",
-                            marginTop: "-15vmax", marginLeft: "7vmax"
-                        }}>
+
+                            {/* image decor2 */}
+                            {/* <div style={{ width: "23vmax", height: "23vmax", borderRadius: "50vmax", border: "0.3vmax solid #125B50", marginTop: "13vmax", marginLeft: "17vmax" }}>
+                                    
+                                    <div style={{ width: "1vmax", height: "2vmax", backgroundColor: "#f1f5c1", borderRadius: "50vmax", rotate: "130deg", marginLeft: "3.5vmax", marginTop: "-2vmax" }}></div>
+                                    <div style={{ width: "1vmax", height: "2vmax", backgroundColor: "#f1f5c1", borderRadius: "50vmax", rotate: "10deg", marginLeft: "22.5vmax", marginTop: "-12vmax" }}></div>
+                                    <div style={{ width: "1vmax", height: "2vmax", backgroundColor: "#f1f5c1", borderRadius: "50vmax", rotate: "60deg", marginLeft: "3.5vmax", marginTop: "-10vmax" }}></div>
+                                </div> */}
+
+                            <div style={{ marginLeft: "6vmax" }}>
+                                {/* image */}
+                                <img src={p1} style={{ marginLeft: "19vmax", marginTop: "13vmax", width: "20vmax", height: "20vmax", borderRadius: "50vmax", border: "0.2vmax solid #125B50" }} />
+
+                                {/* circle */}
+                                <div style={{
+                                    width: "20vmax", height: "20vmax", borderRadius: "52vmax", background: "repeating-linear-gradient(45deg, rgba(18,91,80,1), 10px, #f1f5c1 10px ,#f1f5c1 20px)",
+                                    marginLeft: "8vmax", marginTop: "-20vmax"
+                                }}>
+
+                                </div>
+                            </div>
 
                         </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            {/* Our Services part */}
+            <div style={{ marginTop: "4vmax", marginBottom: "5vmax" }}>
+                {/* heading */}
+                <div style={{ marginLeft: "38vmax" }}>
+                    <Typography style={{
+                        fontSize: "3.3vmax", fontWeight: 550, color: "#125B50"
+                    }}>What We Do?</Typography>
+                    <div style={{ border: "0.2vmax solid #F8B400", width: "7vmax" }}></div>
+                </div>
+
+                {/* content */}
+
+                <div style={{ display: "flex", marginTop: "7vmax", gap: "12vmax" }}>
+                    <div>
+                        <img src={p4} style={{ width: "14vmax", height: "17vmax" }} />
+                    </div>
+                    <div style={{paddingTop:"2vmax"}}>
+                        <img src={p2} style={{ width: "45vmax", height: "30vmax" }} />
+                        <img src={p3} style={{ width: "45vmax", height: "30vmax",marginTop:"-39vmax" }} />
                     </div>
                 </div>
             </div>

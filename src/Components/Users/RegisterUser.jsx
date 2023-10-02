@@ -1,15 +1,56 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import Alert from '@mui/material/Alert';
 import ReactModal from 'react-modal';
 import P1 from '../../assets/User/RegisterP1.jpg'
 
 const RegisterUser = ({ RegIsOpen, RegOnCLose }) => {
+  const navigateTo = useNavigate();
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [username, setUsername] = useState();
+  const [passwor, setPassword] = useState();
+  const [usernm, setUsername] = useState();
+  const [confirmP, setConfirmP] = useState();
 
   const handleRegisterOnClick = () => {
-    console.log("ji");
+    let Email = email;
+    let username = usernm;
+    let password = passwor;
+    let ConfirmP = confirmP;
+    if (password !== ConfirmP) {
+      alert("passwords don't match,kindly check!")
+    }
+
+    else {
+      fetch('http://localhost:3000/users/signup', {
+        method: "POST",
+        body: JSON.stringify({
+          username,
+          password,
+          Email
+        }),
+        headers: {
+          "Content-type": "application/json"
+        }
+      }).then((res) => {
+        if (res.status === 201) {
+          alert("User joined in successfully!");
+          navigateTo('/userprofile');
+        }
+        else if (res.status === 403) {
+          alert("user already exsists!!")
+        }
+        else if (res.status === 411) {
+          alert("All fields are mandatory")
+        }
+        return res.json();
+      }).then((data) => {
+        localStorage.setItem("token", data.token)
+      })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   }
   return (
     <>
@@ -46,14 +87,14 @@ const RegisterUser = ({ RegIsOpen, RegOnCLose }) => {
                 paddingLeft: "1.2vmax", border: "0.2vmax solid #125B50", width: "22vmax", height: "2.9vmax", borderRadius: "2vmax", marginLeft: "1.8vmax", marginBottom: "1.5vmax",
               }}></input>
             <input type='text' placeholder='Confirm Password'
-              
+              onChange={(e) => setConfirmP(e.target.value)}
               style={{
                 paddingLeft: "1.2vmax", border: "0.2vmax solid #125B50", width: "22vmax", height: "2.9vmax", borderRadius: "2vmax", marginLeft: "1.8vmax",
               }}></input>
 
-              <Button variant='contained'  onClick={handleRegisterOnClick}
-                    sx={{ width: "23.5vmax", borderRadius: "2vmax", marginTop: "1.2vmax", marginLeft: "1.8vmax", height: "2.9vmax", backgroundColor: "#125B50" }}>login</Button>
-                
+            <Button variant='contained' onClick={handleRegisterOnClick}
+              sx={{ width: "23.5vmax", borderRadius: "2vmax", marginTop: "1.2vmax", marginLeft: "1.8vmax", height: "2.9vmax", backgroundColor: "#125B50" }}>login</Button>
+
           </div>
         </div>
         {/* <button onClick={RegOnCLose}>close</button> */}

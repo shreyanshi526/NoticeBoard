@@ -1,17 +1,42 @@
-import { Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { Button, TextField, Typography } from '@mui/material';
 import ReactModal from 'react-modal';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DrawIcon from '@mui/icons-material/Draw';
 
 const LoginUser = ({ isOpen, onClose }) => {
+    const navigateTo = useNavigate();
     const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [passwor, setPassword] = useState();
 
     const handleLoginOnClick = () => {
-        let e = email;
-        let p = password;
-        console.log(e,p)
+        let username = email;
+        let password = passwor;
+        fetch('http://localhost:3000/users/login', {
+            method: "POST",
+            body: JSON.stringify({
+                username,
+                password
+            }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        }).then((res) => {
+            if (res.status === 201) {
+                alert("User logged in successfully!");
+                navigateTo('/userprofile');
+            } else {
+                alert("Login failed. Please check your credentials.");
+            }
+            return res.json(); 
+        })
+            .then((data) => {
+                localStorage.setItem("token",data.token)
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
     }
 
     return (
@@ -34,7 +59,7 @@ const LoginUser = ({ isOpen, onClose }) => {
 
                 <div style={{ marginTop: "4vmax", display: "flex", flexDirection: "column" }}>
                     <Typography sx={{ marginLeft: "8.8vmax", fontSize: "3vmax", fontWeight: 550, color: "#F8B400", }}>Login</Typography>
-                     
+
                     <input type='text' placeholder='Email'
                         onChange={(e) => setEmail(e.target.value)}
                         style={{
@@ -50,8 +75,8 @@ const LoginUser = ({ isOpen, onClose }) => {
                     <button style={{ fontSize: "1.1vmax", backgroundColor: "white", border: "none", color: "#125B50", fontWeight: 400, marginLeft: "16vmax", paddingTop: "0.2vmax" }}> forgot password? </button>
 
                     {/* loginbutton */}
-                    <Button variant='contained'  onClick={handleLoginOnClick}
-                    sx={{ width: "23.5vmax", borderRadius: "2vmax", marginTop: "1.2vmax", marginLeft: "1.8vmax", height: "2.9vmax", backgroundColor: "#125B50" }}>login</Button>
+                    <Button variant='contained' onClick={handleLoginOnClick}
+                        sx={{ width: "23.5vmax", borderRadius: "2vmax", marginTop: "1.2vmax", marginLeft: "1.8vmax", height: "2.9vmax", backgroundColor: "#125B50" }}>login</Button>
                 </div>
 
                 <div style={{ display: "flex", marginLeft: "5.3vmax", marginTop: "2vmax" }}>
